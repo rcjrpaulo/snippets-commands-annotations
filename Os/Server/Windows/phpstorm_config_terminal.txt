@@ -1,0 +1,23 @@
+//termina do Git bash do WIndows no terminal do php storm
+File>Settings
+procura terminal
+Coloca isso no SHell path: "C:\Program Files\Git\bin\sh.exe" -login -i 
+
+
+//cmder do laragon no phpstorm
+The Steps
+#1 Add a new environment variable into your Windows via the Control Panel.
+
+user variable windows
+
+Find your Cmder root folder and save it into CMDER_ROOT variable. Please note that i’m using the Cmder inside Laragon.
+
+ 
+
+#2 Update your terminal setting inside PhpStorm. Change the shell path from cmd.exe as follows:
+
+1
+"cmd.exe" /k ""%CMDER_ROOT%\vendor\init.bat""
+ 
+
+That’s all. Now you may restart your PhpStorm. Your terminal should be using Cmder. Have comments /questions about this tutorial? Put your comments below.

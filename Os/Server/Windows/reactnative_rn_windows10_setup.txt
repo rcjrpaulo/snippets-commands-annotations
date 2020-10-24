@@ -1,0 +1,26 @@
+Variáveis de ambiente
+
+# INSTALAR O CHOCO
+
+Rodar choco install -y nodejs-lts yarn python2 jdk8
+
+ANDROID_HOME
+C:\Users\paulo\AppData\Local\Android\Sdk
+
+JAVA_HOME
+C:\Program Files\Java\jdk
+
+--no path do system
+C:\Program Files\Java\jdk1.8.0_211\bin
+C:\Users\paulo\AppData\Local\Android\Sdk\platform-tools
+---
+Instalar android studio (video de configuração https://www.youtube.com/watch?v=dKq1duOyjhw)
+Instalar react-native com o yarn global add react-native-cli
+Instalar adv do android studio (android 9 pie)
+
+----
+Outros conteúdos usados para auxiliar
+https://react-native.rocketseat.dev/android/windows/
+https://www.youtube.com/watch?v=gQf60JPKcg4
+https://reactnative.dev/docs/environment-setup
+https://react-native.rocketseat.dev/android/windows

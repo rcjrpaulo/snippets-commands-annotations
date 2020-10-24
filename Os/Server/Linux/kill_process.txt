@@ -1,0 +1,2 @@
+ps aux | grep 4444
+sudo kill -9 numDoProcesso(pid)

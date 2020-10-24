@@ -1,0 +1,49 @@
+UBUNTU
+--xdebug
+
+sudo apt-get install php-xdebug
+php -m
+sudo service apache2 restart
+sudo gedit /etc/php/7.1/mods-available/xdebug.ini
+sudo apt-get install php-soap php-curl
+sudo service apache2 restart
+xdebug.show_error_trace = 1 <- por no xdebug.ini (quando abre o gedit)
+
+adicionar essas 2 linhas no php.ini em /etc/php/7.1/apache2
+
+zend_extension=/usr/lib/php/20190902/xdebug.so
+xdebug.remote_enable=on
+--
+######################
+
+
+WINDOWS
+##############ARQUIVO PHP.INI###################
+
+https://xdebug.org/download
+Baixei versão PHP 7.2 VC15 TS (64 bit) pro Laragon php 7.2
+
+passo 1: adicione essas linhas no php.ini
+[XDebug]
+zend_extension = C:\xampp\php\ext\php_xdebug.dll
+xdebug.default_enable=1
+xdebug.remote_enable=1
+xdebug.remote_port=9000
+xdebug.idekey=PHPSTORM
+
+(DO LARAGON PHP 7.2)
+[XDebug]
+zend_extension=xdebug-2.9.4-7.2-vc15-x86_64
+xdebug.remote_autostart = 1
+xdebug.default_enable=1
+xdebug.remote_enable=1
+xdebug.remote_port=9000
+xdebug.idekey=PHPSTORM
+
+passo 2: No PHPSTORM seta debug port 9000
+marca os 2 force break
+(exemplo no xampp)
+
+Vê se existe o arquivo php_xdebug.dll e aponta ele no php storm no passo 3
+
+passo 3: Vai em FIle > Settings > Languages & Frameworks > PHP > CLI Interpreter > ... > Debugger extension > C:\xampp\php\ext\php_xdebug.dll

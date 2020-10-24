@@ -1,0 +1,6 @@
+~$RButton::
+    While GetKeyState("RButton", "P"){
+        Click
+        Sleep 50  ;  milliseconds
+    }
+return

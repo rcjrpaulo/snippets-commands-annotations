@@ -1,0 +1,15 @@
+criando backup
+mysql container
+docker-compose exec mysql /usr/bin/mysqldump -u root --password=root --skip-opt --complete-insert sigep_test > /home/cohros/projects/sigep/tests/database/dump.sql
+
+docker-compose exec mysql /usr/bin/mysqldump -u root --password=root sigep_test > /home/cohros/projects/sigep/tests/database/dump.sql
+
+
+restaurando
+mysql container
+cat /home/cohros/dump.sql | docker exec -i b6ec71aac6b5 mysql -Dsigep_test -uroot -proot sigep_test
+
+php container
+echo shell_exec("mysql -h mysql -u root -proot --default-character-set=utf8 sigep_test < dump.sql");
+
+sed -i -e 's/DEFINER[ ]*=[ ]*[^*]*\\*/\\*/' dump.sql

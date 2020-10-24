@@ -1,0 +1,373 @@
+###############MÁSCARA####################
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/v-mask/dist/v-mask.min.js"></script>
+<script>
+// As a plugin
+Vue.use(VueMask.VueMaskPlugin);
+
+<input @blur="buscaCep" v-mask="'#####-###'" v-model="cep" class="form-control" name="cep" id="cep">
+
+
+
+###############DEBUG DO VUE PARA CHROME####################
+USA O ARQUIVO CDN VUE NORMAL, NÃO FUNCIONA COM O MINIFICADO
+//Vue.config.devtools = true;
+
+###############INCLUINDO OS CDN####################
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js"></script>
+<script src="https://unpkg.com/vuejs-datepicker"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://unpkg.com/vue-swal"></script>
+
+############SWEET ALERT##############
+sovai() {
+                swal({
+                    title: "Are you sure?",
+                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                    icon: "error",
+                    buttons: {
+                        cancel: "Cancelar",
+                        confirm: "Confirmar",
+                    },
+                    dangerMode: true,
+                })
+                    .then((confirmouAcao) => {
+                        if (confirmouAcao) {
+                            swal("Poof! Your imaginary file has been deleted!", {
+                                icon: "success",
+                            });
+                        } else {
+                            swal("Your imaginary file is safe!");
+                        }
+                    });
+            }
+
+swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this imaginary file!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+    swal("Poof! Your imaginary file has been deleted!", {
+      icon: "success",
+    });
+  } else {
+    swal("Your imaginary file is safe!");
+  }
+});
+
+###########EXEMPLO#############
+<div id="#app" v-cloak></div>
+<script> new Vue({ el: '#app', name: 'nome', data: {attr1: '', attr2: '' }... })</script>
+//com o v-cloak no div do app e esse css o vue so aparece quando tiver todo carregado
+<style>[v-cloak] {display: none}</style>
+
+
+
+//Pega elemento e da blur pra tirar o focus
+document.activeElement.blur()
+
+//add feedback vue el
+new Vue({
+    el: '#vue-feedback-add',
+    name:'VueFeedbackAdd',
+    data: {
+        leds,
+        employees,
+        search_employee: '',
+        ptBrLanguage: ptBrLanguage,
+        noLedsWarning: false,
+        loading: false,
+        scoreColors: [
+            'label label-default',
+            'label label-danger',
+            'label label-warning',
+            'label label-success',
+            'label label-info',
+            'label label-primary max-score-color',
+        ],
+        amountSelected: {
+            'performances': 0,
+            'competencies': 0,
+            'skills': 0
+        },
+        performances: [],
+        competencies: [],
+        skills: [],
+        scores: null,
+        showResults: false,
+        results: {},
+        resultIsEmpty: false,
+        results_filtered: {},
+        new_results: null,
+        activeTab: requestedFeedbackId ? 2 : 1,
+        related_evaluation_field: null,
+        evaluation_item_selected: '',
+        form_type: '', // default or related with continuous evaluation,
+        formData: {
+            employees: [],
+            type: null, // improvement, praise or comment
+            fact: '',
+            image: '',
+            cause: '',
+            action: '',
+            date: null,
+            new_results: null,
+            status: false,
+            hidden: false,
+            requestedFeedbackId
+        },
+        highlighted: {
+            customPredictor: function (date) {
+                return date.toDateString() == new Date().toDateString()
+            }
+        },
+    },
+    components: {
+        vuejsDatepicker
+    },
+    computed: {
+        myTeam() {
+            return this.employees.filter(employee => {
+                let found = contains(employee.usuario_nome, this.search_employee)
+                const isMyLed = this.isMyLed(employee)
+
+                return isMyLed && found && !employee.selected
+            })
+        },
+        allEmployeesExceptMyTeam() {
+            return this.employees.filter(employee => {
+                let found = contains(employee.usuario_nome, this.search_employee)
+                const isMyLed = this.isMyLed(employee)
+
+                return found && !employee.selected && !isMyLed
+            })
+        },
+        selectedEmployees() {
+            return this.employees.filter(employee => employee.selected == true)
+        },
+        selectedEmployeesName () {
+            return this.selectedEmployees.map(employee => employee.usuario_nome)
+        }
+    },
+    methods: {
+        isMyLed (employee) {
+            if (this.leds.length === 0) {
+                return false
+            }
+
+            return this.leds.includes(employee.funcionario_id)
+        },
+        setImage (event) {
+            this.formData.image = event.target.files[0] || e.dataTransfer.files[0]
+        },
+        saveFeedbackAskingForRelation() {
+            let self = this
+            var title = jQuery('#js-feedback-relation-title').val()
+            var cancel = jQuery('#js-feedback-relation-cancel').val()
+            var confirm = jQuery('#js-feedback-relation-confirm').val()
+            var text = jQuery('#js-feedback-relation-text').val()
+
+            swal({
+                title: title,
+                text: text,
+                type: "info",
+                showCancelButton: true,
+                confirmButtonClass: 'btn-info',
+                confirmButtonText: confirm,
+                cancelButtonText: cancel,
+                cancelButtonClass: 'btn-success',
+                closeOnConfirm: true,
+                closeOnClickOutside: true,
+            }, function (doRelationWithEvaluation) {
+                if (doRelationWithEvaluation) {
+                    self.form_type = 'continuous_related'
+                    self.nextStep()
+                } else {
+                    self.saveFeedback()
+                }
+            });
+        },
+        saveFeedback () {
+            this.formData.employees = this.selectedEmployees.map(item => item.funcionario_id)
+
+            if (!this.formData.type) {
+                jQuery.ChrNotificationError('Tipo do feedback é obrigatório')
+                return false
+            }
+
+            if (!this.formData.fact) {
+                jQuery.ChrNotificationError('O campo fato é obrigatório')
+                return false
+            }
+
+            if (!this.formData.date) {
+                jQuery.ChrNotificationError('O campo data é obrigatório')
+                return false
+            }
+
+            if (new Date(this.formData.date) > Date.now()) {
+                jQuery.ChrNotificationError('O campo data não pode ser maior que a data de hoje')
+                return false
+            }
+
+            let requestData = _.cloneDeep(this.formData)
+            requestData.date = moment(requestData.date).format('YYYY-MM-DD')
+            requestData.new_results = JSON.stringify(this.new_results)
+
+            let formData = createFormData(requestData)
+
+            let options = {
+                headers: {'Content-Type': 'multipart/form-data'}
+            }
+
+            this.loading = true;
+
+            http.post('/ocorrencias/add', formData, options)
+                .then(response => {
+                    if (!response.data.error) {
+                        jQuery.ChrNotification(response.data.message)
+                        this.lastStep()
+                    } else {
+                        jQuery.ChrNotificationError(response.data.message)
+                    }
+
+                    this.loading = false;
+                })
+                .catch(error => {
+                    jQuery.ChrNotificationError('Falha ao inserir resultado de campos avaliados')
+                    this.loading = false;
+                })
+        },
+        changeFeedbackType (type) {
+            this.formData.type = type
+
+            this.formData.status = type != -1
+        },
+        getEvaluationFieldsBySelectedEmployees () {
+            if (!this.selectedEmployees.length) {
+                jQuery.ChrNotificationError('Nenhum funcionário selecionado')
+                return false
+            }
+            this.nextStep()
+
+            const selectedEmployeeIds = this.selectedEmployees.map(employee => employee.funcionario_id)
+
+            http.post('/ocorrencias/ajax_get_resultados', {'selectedEmployeeIds': selectedEmployeeIds})
+                .then(response => {
+                    this.noLedsWarning = false;
+                    if (response.data.hasOwnProperty('noLedsWarning')) {
+                        this.noLedsWarning = response.data.noLedsWarning
+                        return false
+                    }
+
+                    this.performances = response.data.performances
+                    this.competencies = response.data.competencies
+                    this.skills = response.data.skills
+                    this.results = _.cloneDeep(response.data.results)
+                    this.resultIsEmpty = _.isEmpty(response.data.results)
+                    this.new_results = _.cloneDeep(response.data.results)
+                    this.scores = response.data.scores
+                })
+                .catch(error => jQuery.ChrNotificationError('Falha ao consultar resultado de campos avaliados'))
+        },
+        getItem (type, id) {
+            return this[type].find(item => item.id == id)
+        },
+        checkIfTypeIsEmpty (itemType) {
+            return this[itemType].length > 0
+        },
+        getScoreColor (score) {
+            return this.scoreColors[score]
+        },
+        getResultsByEvaluationField (type, id) {
+            let resultFound = false
+
+            _.forIn(this.results_filtered, (employeeResultsByType, employeeId) => {
+                _.forIn(employeeResultsByType[type], (employeeResults, key) => {
+                    if (employeeResults.itemId == id) {
+                        resultFound = true
+                    }
+                    this.$set(this.results_filtered[employeeId], type, employeeResultsByType[type].filter(result => result.itemId != id))
+                })
+            })
+
+            if (!resultFound) {
+                _.forIn(this.results, (employeeResults, employeeId) => {
+                    _.forIn(employeeResults[type], (evaluationResultsByType, itemId) => {
+                        if (itemId == id) {
+                            this.results[employeeId][type][itemId]['itemId'] = itemId
+                            this.results[employeeId][type][itemId]['itemType'] = type
+                            this.results[employeeId][type][itemId]['employeeId'] = employeeId
+                            this.results[employeeId][type][itemId]['userName'] = this.results[employeeId].userName
+
+                            if (!this.results_filtered[employeeId]) {
+                                this.$set(this.results_filtered, employeeId, {})
+                            }
+
+                            if (!this.results_filtered[employeeId][type]) {
+                                this.$set(this.results_filtered[employeeId], 'performances', [])
+                                this.$set(this.results_filtered[employeeId], 'competencies', [])
+                                this.$set(this.results_filtered[employeeId], 'skills', [])
+                            }
+
+                            this.results_filtered[employeeId].userName = this.results[employeeId].userName
+
+                            this.results_filtered[employeeId][type].push(this.results[employeeId][type][itemId])
+                            this.showResults = true;
+                        }
+                    })
+                })
+            }
+
+            this.amountSelected[type] = resultFound ? this.amountSelected[type] - 1 : this.amountSelected[type] + 1
+        },
+        changeEvaluationItemList (evaluationItem) {
+            this.related_evaluation_field = evaluationItem
+            this.evaluation_item_selected = null
+        },
+        flagAsChangedResult (result) {
+            this.formData.relatedWithContinuous = true;
+            result.changedResult = true;
+            result.evidencia = '';
+            result.comentario = '';
+        },
+        getFeedbackType (status) {
+            if (FEEDBACK_TYPES) {
+                return FEEDBACK_TYPES[status]
+            }
+
+            return ''
+        },
+        nextStep () {
+            this.activeTab += 1;
+        },
+        lastStep () {
+            this.activeTab = 4;
+        },
+        previousStep () {
+            this.activeTab -= 1;
+        },
+        stepActive (tab) {
+            if (this.formData.requestedFeedbackId && tab == 1) {
+                return false
+            }
+            if (this.activeTab == 1) {
+                return false
+            }
+
+            this.activeTab = tab;
+        },
+        formatDate(date) {
+            if (sessionLanguage == 'pt_br') {
+                return moment(date).format('DD/MM/YYYY')
+            }
+
+            return moment(date).format('MM/DD/YYYY')
+        }
+    }
+})

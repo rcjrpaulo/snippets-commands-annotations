@@ -1,0 +1,2 @@
+#restaura um dump no banco frances_ead do mysql do laragon
+mysql -u root -p  frances_ead < C:\Users\paulo\Downloads\ead.sql

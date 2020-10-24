@@ -1,0 +1,11 @@
+//change origin
+git remote set-url origin https://github.com/USERNAME/REPOSITORY.git
+
+//save https pass
+git config --global credential.helper store
+
+/\/\/\/\/\\/\
+
+//set to use only git pull / git push to current branch
+git config --global pull.default current
+git config --global push.default current

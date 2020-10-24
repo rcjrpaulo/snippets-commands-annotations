@@ -1,0 +1,34 @@
+Abrange todos os acentos
+[À-ú]*
+
+Nome e sobrenome(s) com apenas um espaço entre eles, não mais que um
+^[a-zA-ZÀ-ú]+([\s][a-zA-ZÀ-ú]+)*?$
+
+Valida email
+^\w*(\.\w*)?(\_\w*)?@{1}(\w+)(\.\w+){1}(\.\w+)?
+
+Valida CPF
+^[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}-?[0-9]{2}$
+
+Valida Endereço (Rua/Avenida + Número Obrigatório)
+^\w+(\s{1}\w+)+(\s[0-9]+)?$
+
+Valida Whatsapp
+^(0?[1-9]{1}[0-9]{1})?9[0-9]{8}$
+
+
+$metodo = 'function W()';
+
+preg_match('/^.*(public |private )?(static)?function +\w+\(+.*\)+.*$/', $metodo, $resultado);
+
+var_dump($resultado);
+
+
+$chamadaDoMetodo = '->abcd(';
+
+preg_match('/^.*(->|::)\w+\(+.*\)+.*$/', $chamadaDoMetodo, $resultado);
+
+var_dump($resultado);
+
+
+$cpf = '/[0-9]{3}\.?[0-9]{3}\.?[0-9]{3}\-?[0-9]{2}/';

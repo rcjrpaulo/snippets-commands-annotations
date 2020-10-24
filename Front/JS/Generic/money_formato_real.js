@@ -1,0 +1,1 @@
+variavelFloat.toLocaleString('pt-BR')

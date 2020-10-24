@@ -1,0 +1,6 @@
+~SSH~
+//create ssh
+ssh-keygen -t rsa
+
+//get ssh key
+cat ~/.ssh/id_rsa.pub 

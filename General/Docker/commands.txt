@@ -1,0 +1,41 @@
+--INSTALAÇÃO
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+--permissão
+sudo usermod -aG docker $USER
+
+--docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+--permissão docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+--COMANDOS MAIS USADOS
+
+//desmancha os containers do projeto
+docker-compose down
+
+//cria os containers do projeto
+docker-compose up -d
+
+//cria os containers e rebuilda, caso tenha alterado algo no arquivo de configuração, mas o container está no cache
+docker-compose up -d --build
+
+//lista os containers criados
+docker ps
+
+//lista os containers do projeto e os status se estão rodando
+docker-compose ps
+
+//mostra informações do container, como IP interno e externo, caso precise do IP do webserver pra apontar no vhosts
+docker inspect <nome-do-container>
+
+//reinicia os containers do projeto
+docker-compose restart
+
+//para os containers do projeto
+docker-compose stop
+
+//inicia os containers do projeto
+docker-compose start

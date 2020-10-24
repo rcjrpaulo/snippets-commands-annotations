@@ -1,0 +1,9 @@
+C:\Users\paulo>php -i|find "Architecture"
+Architecture => x64
+
+C:\Users\paulo>php -i|find "PHP Version"
+PHP Version => 7.1.26
+PHP Version => 7.1.26
+
+C:\Users\paulo>php -i|find "Thread Safety"
+Thread Safety => enabled
